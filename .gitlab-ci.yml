@@ -1,0 +1,78 @@
+image: alpine
+
+stages:
+  - mvn-build
+  - mvn-test
+  - mvn-package
+  - docker-build
+  - docker-scan
+  - docker-deploy
+
+maven_build:
+  stage: mvn-build
+  extends: .maven_build
+
+maven_test:
+  stage: mvn-test
+  extends: .maven_test
+
+maven_package_jar:
+  stage: mvn-package
+  extends: .maven_package_jar
+
+docker_build:
+  stage: docker-build
+  extends: .docker_build
+  only:
+    - master
+    - dev-master
+    - dev-docker
+  variables:
+    IMAGE_ARCH: amd64
+    JAVA_OPTS: -Dmicronaut.environments=dev
+    IMAGE_TAG: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+    DOCKERFILE: Dockerfile
+
+container_scan:anchore:
+  stage: docker-scan
+  extends: .container_scan:anchore
+  only:
+    - master
+    - dev-master
+
+container_scan:clair:
+  stage: docker-scan
+  extends: .container_scan:clair
+  only:
+    - master
+    - dev-master
+
+docker_deploy:
+  stage: docker-deploy
+  extends: .docker_deploy
+  tags:
+    - shell
+    - staging
+  only:
+    - master
+    - dev-master
+    - dev-docker
+  variables:
+    ENV_APP_UNIQUE_NAME: ${CI_PROJECT_NAME}
+    APP_URL: https://api.technocity.tn/nlp/
+    APP_MAIL: sami@technocity.tn
+    DOCKER_RUN_ARGS: --cpus=1 --restart=unless-stopped --network=webproxy
+  environment:
+    name: Production
+    url: https://$APP_URL/
+
+include:
+  - project: 'technocity/devops'
+    ref: master
+    file: '/ci/.gitlab-ci-maven.yml'
+  - project: 'technocity/devops'
+    ref: master
+    file: '/ci/.gitlab-ci-docker-mn.yml'
+  - project: 'technocity/devops'
+    ref: master
+    file: '/ci/.gitlab-ci-analyse.yml'
