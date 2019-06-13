@@ -59,7 +59,7 @@ docker_deploy:
     - dev-docker
   variables:
     ENV_APP_UNIQUE_NAME: ${CI_PROJECT_NAME}
-    APP_URL: https://api.technocity.tn/nlp/
+    APP_URL: https://api.technocity.tn/liquify/
     APP_MAIL: sami@technocity.tn
     DOCKER_RUN_ARGS: --cpus=1 --restart=unless-stopped --network=webproxy
   environment:
