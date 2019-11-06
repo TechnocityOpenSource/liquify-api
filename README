@@ -1,0 +1,5 @@
+# Liquify API
+
+REST API built with JAVA + Micronaut for converting Liquibase scripts to XML, YAML, JSON and SQL
+
+Parts of code are from : https://github.com/daquino/liquify
