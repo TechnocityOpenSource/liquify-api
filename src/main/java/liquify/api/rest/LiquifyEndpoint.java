@@ -20,7 +20,7 @@ public class LiquifyEndpoint {
         this.liquifyService = liquifyService;
     }
 
-    @Post(value = "/", produces = MediaType.TEXT_PLAIN, consumes = MediaType.APPLICATION_JSON)
+    @Post(consumes = MediaType.APPLICATION_JSON, produces = MediaType.TEXT_PLAIN)
     public HttpResponse<?> doLiquify(@Body ConversionArguments conversionArguments) throws IOException, LiquibaseException {
         return HttpResponse.ok(liquifyService.liquifyDatabaseChangeLog(conversionArguments));
     }
