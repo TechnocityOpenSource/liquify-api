@@ -1,3 +1,6 @@
 micronaut:
   application:
     name: liquify-api
+  server:
+    cors:
+      enabled: true
