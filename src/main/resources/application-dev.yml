@@ -2,6 +2,6 @@ micronaut:
   application:
     name: liquify-api
   server:
-    port: 8080
+    port: 80
     cors:
       enabled: true

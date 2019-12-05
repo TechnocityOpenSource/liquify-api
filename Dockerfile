@@ -7,4 +7,4 @@ COPY target/liquify-api*.jar liquify-api.jar
 
 CMD java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dcom.sun.management.jmxremote -noverify ${JAVA_OPTS} -jar liquify-api.jar
 
-EXPOSE 8080
+EXPOSE 80
