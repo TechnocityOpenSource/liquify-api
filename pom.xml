@@ -10,6 +10,8 @@
         <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <exec.mainClass>liquify.api.Application</exec.mainClass>
+
+        <logstash-logback-encoder.version>6.2</logstash-logback-encoder.version>
     </properties>
     <repositories>
         <repository>
@@ -72,6 +74,11 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-logback-encoder.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
